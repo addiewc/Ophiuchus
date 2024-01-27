@@ -1,0 +1,3 @@
+[submodule "PoliLean"]
+	path = PoliLean
+	url = git@github.com:BunsenFeng/PoliLean.git
