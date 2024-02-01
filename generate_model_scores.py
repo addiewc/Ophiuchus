@@ -126,7 +126,7 @@ def generate_scores(
     classifier = pipeline(
         "zero-shot-classification",
         model="facebook/bart-large-mnli",
-        device=args.device,
+        device=device,
     )
 
     new_responses = []
