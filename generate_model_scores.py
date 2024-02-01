@@ -72,7 +72,7 @@ def get_save_dir(model, prompt_type, person, party, country, year):
 
 
 def get_model_responses(generator, prompt, verbose=False):
-    if args.verbose:
+    if verbose:
         print(f"Prompt: {prompt}")
     results = generator(prompt)
     responses = [r["generated_text"][len(prompt)+1:] for r in results]
@@ -81,7 +81,7 @@ def get_model_responses(generator, prompt, verbose=False):
     return responses
 
 
-def classify_model_responses(classifier, prompt, responses):
+def classify_model_responses(classifier, prompt, responses, verbose=False):
     pos_scores = []
     neg_scores = []
     for r_idx, response in enumerate(responses):
@@ -89,7 +89,7 @@ def classify_model_responses(classifier, prompt, responses):
         pos_scores.append(result["scores"][result["labels"].index("agree")])
         neg_scores.append(result["scores"][result["labels"].index("disagree")])
 
-        if r_idx == 0 and args.verbose:
+        if r_idx == 0 and verbose:
             print(f"\tScores: {pos_scores[-1]:.3f} agree, {neg_scores[-1]:.3f} disagree.")
     more_pos = sum([1 if p > n else 0 for p, n in zip(pos_scores, neg_scores)])
     if more_pos > len(pos_scores) / 2:  # going to say it's overall positive
@@ -135,12 +135,12 @@ def generate_scores(
     for i in tqdm(range(len(statements))):
         statement = statements[i]["statement"]
         input = prompt.replace("<statement>", statement)
-        if args.verbose:
+        if verbose:
             print(f"Input: {input}")
 
         # first, let's see how the model answers
         responses = get_model_responses(generator, input, verbose=verbose)
-        if args.save_intermediate:
+        if save_intermediate:
             new_responses.extend([
                 {
                     "statement": statement,
@@ -150,7 +150,7 @@ def generate_scores(
             ])
 
         # now, let's test the sentiment
-        avg_scores, ind = classify_model_responses(classifier, prompt, responses)
+        avg_scores, ind = classify_model_responses(classifier, prompt, responses, verbose=verbose)
         pos, neg = avg_scores
         new_scores.append(f"{i} agree: {pos} disagree {neg}\n")
         individual_scores.append({"id": i, "agree": ind[0], "disagree": ind[1]})
