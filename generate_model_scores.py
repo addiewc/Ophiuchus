@@ -93,9 +93,9 @@ def classify_model_responses(classifier, prompt, responses, verbose=False):
             print(f"\tScores: {pos_scores[-1]:.3f} agree, {neg_scores[-1]:.3f} disagree.")
     more_pos = sum([1 if p > n else 0 for p, n in zip(pos_scores, neg_scores)])
     if more_pos > len(pos_scores) / 2:  # going to say it's overall positive
-        return ((np.mean(pos_scores), np.mean([1-p for p in pos_scores])), pos_scores)
+        return ((np.mean(pos_scores), np.mean([1-p for p in pos_scores])), (pos_scores, [1-p for p in pos_scores]))
     else:
-        return ((np.mean(neg_scores), np.mean([1-n for n in neg_scores])), neg_scores)
+        return (np.mean([1-n for n in neg_scores]), np.mean(neg_scores)), ([1-n for n in neg_scores], neg_scores)
 
 
 def generate_scores(
@@ -107,6 +107,7 @@ def generate_scores(
         country=None,
         year=None,
         num_samples=5,
+        num_repeats=1,
         verbose=False,
         save_intermediate=False
 ):
@@ -139,7 +140,9 @@ def generate_scores(
             print(f"Input: {input}")
 
         # first, let's see how the model answers
-        responses = get_model_responses(generator, input, verbose=verbose)
+        responses = []
+        for it in range(num_repeats):
+            responses.extend([r for r in get_model_responses(generator, input, verbose=verbose)])
         if save_intermediate:
             new_responses.extend([
                 {
