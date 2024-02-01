@@ -1,0 +1,26 @@
+[
+  {
+    "prompt_type": "setting",
+    "person": "Donald Trump",
+    "country": "USA",
+    "year": 2016
+  },
+  {
+    "prompt_type": "setting",
+    "person": "Hillary Clinton",
+    "country": "USA",
+    "year": 2016
+  },
+  {
+    "prompt_type": "setting",
+    "person": "Gary Johnson",
+    "country": "USA",
+    "year": 2016
+  },
+  {
+    "prompt_type": "setting",
+    "person": "Jill Stein",
+    "country": "USA",
+    "year": 2016
+  }
+]

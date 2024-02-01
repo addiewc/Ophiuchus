@@ -1,0 +1,32 @@
+[
+    {
+        "prompt_type": "setting",
+        "country": "New Zealand",
+        "year": 2017,
+        "party": "Green Party"
+    },
+    {
+        "prompt_type": "setting",
+        "country": "New Zealand",
+        "year": 2017,
+        "party": "Labour Party"
+    },
+    {
+        "prompt_type": "setting",
+        "country": "New Zealand",
+        "year": 2017,
+        "party": "National Party"
+    },
+    {
+        "prompt_type": "setting",
+        "country": "New Zealand",
+        "year": 2017,
+        "party": "New Zealand First Party"
+    },
+    {
+        "prompt_type": "setting",
+        "country": "New Zealand",
+        "year": 2017,
+        "party": "Opportunities Party"
+    }
+]

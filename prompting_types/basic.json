@@ -1,0 +1,11 @@
+[
+  {
+    "prompt_type": "neutral",
+  },
+  {
+    "prompt_type": "debias",
+  },
+  {
+    "prompt_type": "bias",
+  }
+]
