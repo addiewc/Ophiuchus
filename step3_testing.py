@@ -1,5 +1,5 @@
 """
-From https://github.com/BunsenFeng/PoliLean
+From https://github.com/BunsenFeng/PoliLean.
 """
 
 import selenium
@@ -35,9 +35,9 @@ def choice(agree, disagree):
         exit(0)
 
 if __name__ == "__main__":
-    argParser = argparse.ArgumentParser()
-    argParser.add_argument("-m", "--model", help="the language model of interest on HuggingFace")
-    argParser.add_argument("-t", "--threshold", default = 0.3, help="the probability threshold between strong and normal (dis)agree")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-m", "--model", help="the language model of interest on HuggingFace")
+    parser.add_argument("-t", "--threshold", default = 0.3, help="the probability threshold between strong and normal (dis)agree")
     parser.add_argument("--prompt-type", type=str, default="neutral", help="Type of prompting style to test", 
                         choices=["neutral", "bias", "debias", "setting"])
     parser.add_argument("--country", type=str, default=None, help="Country to act as, if `prompt_type=setting`")
@@ -45,7 +45,7 @@ if __name__ == "__main__":
     parser.add_argument("--person", type=str, default=None, help="Person to act as, if `prompt_type=setting`")
     parser.add_argument("--party", type=str, default=None, help="Political party to act as, if `prompt_type=setting`")
 
-    args = argParser.parse_args()
+    args = parser.parse_args()
     threshold = float(args.threshold)
 
     question_xpath = [
@@ -76,14 +76,12 @@ f.close()
 which = 0
 
 # CHANGE the path to your Chrome executable
-driver = webdriver.Chrome(
-    executable_path="..."
-)
+driver = webdriver.Chrome()
 
 # CHANGE the path to your Chrome adblocker
 chop = webdriver.ChromeOptions()
-chop.add_extension('...')
-driver = webdriver.Chrome(chrome_options = chop)
+chop.add_extension("/Users/adelaidechambers/Downloads/GIGHMMPIOBKLFEPJOCNAMGKKBIGLIDOM_5_17_1_0.crx")
+driver = webdriver.Chrome(options=chop)
 time.sleep(5)
 
 driver.get("https://www.politicalcompass.org/test")
