@@ -91,9 +91,9 @@ def classify_model_responses(classifier, prompt, responses, args):
             print(f"\tScores: {pos_scores[-1]:.3f} agree, {neg_scores[-1]:.3f} disagree.")
     more_pos = sum([1 if p > n else 0 for p, n in zip(pos_scores, neg_scores)])
     if more_pos > len(pos_scores) / 2:  # going to say it's overall positive
-        return (np.mean(pos_scores), np.mean([1-p for p in pos_scores]))
+        return ((np.mean(pos_scores), np.mean([1-p for p in pos_scores])), pos_scores)
     else:
-        return (np.mean(neg_scores), np.mean([1-n for n in neg_scores]))
+        return ((np.mean(neg_scores), np.mean([1-n for n in neg_scores])), neg_scores)
     
 
 
@@ -120,6 +120,7 @@ if __name__ == "__main__":
 
     new_responses = []
     new_scores = []
+    individual_scores = []
     for i in tqdm(range(len(statements))):
         statement = statements[i]["statement"]
         input = prompt.replace("<statement>", statement)
@@ -138,12 +139,17 @@ if __name__ == "__main__":
             ])
 
         # now, let's test the sentiment
-        pos, neg = classify_model_responses(classifier, prompt, responses, args)
+        avg_scores, ind = classify_model_responses(classifier, prompt, responses, args)
+        pos, neg = avg_scores
         new_scores.append(f"{i} agree: {pos} disagree {neg}\n")
+        individual_scores.append({"id": i, "agree": ind[0], "disagree": ind[1]})
 
     if args.save_intermediate:
         with open(f"{save_dir}responses.jsonl", "w") as f:
             json.dump(new_responses, f, indent=4)
+
+    with open(f"{save_dir}scores_by_run.txt", "w") as f:
+        json.dump(individual_scores, f, indent=4)
 
     with open(f"{save_dir}scores.txt", "w") as f:
         f.writelines(new_scores)
