@@ -10,11 +10,14 @@ from pprint import pprint
 from transformers import pipeline
 from tqdm import tqdm
 
+from config import HUGGINGFACE_ACCESS_TOKEN
+
 
 def get_args():
     parser = ArgumentParser()
     parser.add_argument("--model", type=str, help="Model name on huggingface")
-    parser.add_argument("--device", type=int, help="GPU to use.")
+    parser.add_argument("--device", type=str, help="GPU to use.")
+    parser.add_argument("--mutli-gpu", action="store_true", help="Let pipelines manage the gpu usage.")
     parser.add_argument("--num-samples", type=int, default=5, help="Number of responses to generate from LM for each prompt.")
     parser.add_argument("--prompt-type", type=str, default="neutral", help="Type of prompting style to test", 
                         choices=["neutral", "bias", "debias", "setting"])
@@ -26,6 +29,9 @@ def get_args():
     parser.add_argument("-v", "--verbose", action="store_true", help="Log more model outputs")
     
     args = parser.parse_args()
+    assert args.device == "cuda" or args.device == str(int(args.device)), f"Unexpected device {args.device}"
+    if args.device != "cuda":
+        args.device = int(args.device)
     return args
 
 
@@ -102,6 +108,7 @@ def generate_scores(
         model,
         prompt_type,
         device,
+        multi_gpu=False,
         person=None,
         party=None,
         country=None,
@@ -120,9 +127,11 @@ def generate_scores(
     generator = pipeline(
         "text-generation",
         model=model,
-        device=device,
+        device=device if not multi_gpu else None,
         max_new_tokens=100,
-        num_return_sequences=num_samples
+        num_return_sequences=num_samples,
+        token=HUGGINGFACE_ACCESS_TOKEN,
+        device_map="auto" if multi_gpu else None,
     )
     classifier = pipeline(
         "zero-shot-classification",
