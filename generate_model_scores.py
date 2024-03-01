@@ -17,7 +17,7 @@ def get_args():
     parser = ArgumentParser()
     parser.add_argument("--model", type=str, help="Model name on huggingface")
     parser.add_argument("--device", type=str, help="GPU to use.")
-    parser.add_argument("--mutli-gpu", action="store_true", help="Let pipelines manage the gpu usage.")
+    parser.add_argument("--multi-gpu", action="store_true", help="Let pipelines manage the gpu usage.")
     parser.add_argument("--num-samples", type=int, default=5, help="Number of responses to generate from LM for each prompt.")
     parser.add_argument("--prompt-type", type=str, default="neutral", help="Type of prompting style to test", 
                         choices=["neutral", "bias", "debias", "setting"])
