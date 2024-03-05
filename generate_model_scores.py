@@ -26,17 +26,21 @@ def get_args():
     parser.add_argument("--person", type=str, default=None, help="Person to act as, if `prompt_type=setting`")
     parser.add_argument("--party", type=str, default=None, help="Political party to act as, if `prompt_type=setting`")
     parser.add_argument("--save-intermediate", action="store_true", help="Save the model responses as an intermediate step")
+    parser.add_argument("--reverse", action="store_true", help="Consider the reverse proposition for all prompts.")
     parser.add_argument("-v", "--verbose", action="store_true", help="Log more model outputs")
     
     args = parser.parse_args()
-    assert args.device == "cuda" or args.device == str(int(args.device)), f"Unexpected device {args.device}"
-    if args.device != "cuda":
+    assert args.device == "cuda" or args.device == "cpu" or args.device == str(int(args.device)), f"Unexpected device {args.device}"
+    if args.device != "cuda" and args.device != "cpu":
         args.device = int(args.device)
     return args
 
 
-def get_statements():
-    statement_file = json.loads(open("PoliLean/response/example.jsonl", "r").read())
+def get_statements(reverse):
+    if not reverse:
+        statement_file = json.loads(open("PoliLean/response/example.jsonl", "r").read())
+    else:
+        statement_file = json.loads(open("reverse_statements.json", "r").read())
     return statement_file
 
 
@@ -87,13 +91,17 @@ def get_model_responses(generator, prompt, verbose=False):
     return responses
 
 
-def classify_model_responses(classifier, prompt, responses, verbose=False):
+def classify_model_responses(classifier, prompt, responses, verbose=False, reverse=False):
     pos_scores = []
     neg_scores = []
     for r_idx, response in enumerate(responses):
         result = classifier(f"{prompt}\n{response}", candidate_labels=["agree", "disagree"])
-        pos_scores.append(result["scores"][result["labels"].index("agree")])
-        neg_scores.append(result["scores"][result["labels"].index("disagree")])
+        if not reverse:
+            pos_scores.append(result["scores"][result["labels"].index("agree")])
+            neg_scores.append(result["scores"][result["labels"].index("disagree")])
+        else:  # correct the reversal here!
+            pos_scores.append(result["scores"][result["labels"].index("disagree")])
+            neg_scores.append(result["scores"][result["labels"].index("agree")])
 
         if r_idx == 0 and verbose:
             print(f"\tScores: {pos_scores[-1]:.3f} agree, {neg_scores[-1]:.3f} disagree.")
@@ -116,9 +124,10 @@ def generate_scores(
         num_samples=5,
         num_repeats=1,
         verbose=False,
-        save_intermediate=False
+        save_intermediate=False,
+        reverse=False
 ):
-    statements = get_statements()
+    statements = get_statements(reverse)
     prompt = get_prompt(prompt_type, person, party, country, year)
     save_dir = get_save_dir(model, prompt_type, person, party, country, year)
     if not os.path.exists(save_dir):
@@ -162,19 +171,19 @@ def generate_scores(
             ])
 
         # now, let's test the sentiment
-        avg_scores, ind = classify_model_responses(classifier, prompt, responses, verbose=verbose)
+        avg_scores, ind = classify_model_responses(classifier, prompt, responses, verbose=verbose, reverse=reverse)
         pos, neg = avg_scores
         new_scores.append(f"{i} agree: {pos} disagree {neg}\n")
         individual_scores.append({"id": i, "agree": ind[0], "disagree": ind[1]})
 
     if save_intermediate:
-        with open(f"{save_dir}responses.jsonl", "w") as f:
+        with open(f"{save_dir}{'reverse_' if reverse else ''}responses.jsonl", "w") as f:
             json.dump(new_responses, f, indent=4)
 
-    with open(f"{save_dir}scores_by_run.txt", "w") as f:
+    with open(f"{save_dir}{'reverse_' if reverse else ''}scores_by_run.txt", "w") as f:
         json.dump(individual_scores, f, indent=4)
 
-    with open(f"{save_dir}scores.txt", "w") as f:
+    with open(f"{save_dir}{'reverse_' if reverse else ''}scores.txt", "w") as f:
         f.writelines(new_scores)
 
     print("Inference complete.")

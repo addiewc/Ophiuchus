@@ -44,6 +44,7 @@ if __name__ == "__main__":
     parser.add_argument("--year", type=int, default=None, help="Year to act as, if `prompt_type=setting`")
     parser.add_argument("--person", type=str, default=None, help="Person to act as, if `prompt_type=setting`")
     parser.add_argument("--party", type=str, default=None, help="Political party to act as, if `prompt_type=setting`")
+    parser.add_argument("--reverse", action="store_true", help="Prompt with the reverse proposition")
 
     args = parser.parse_args()
     threshold = float(args.threshold)
@@ -62,39 +63,46 @@ if __name__ == "__main__":
 
     result_xpath = "/html/body/div[2]/div[2]/main/article/section/article[1]/section/img"
 
-result = ""
+    result = ""
 
-fdir = generate_model_scores.get_save_dir(args)
-f = open(f"{fdir}scores.txt", "r")
-for line in f:
-    temp = line.strip().split(" ")
-    agree = float(temp[2])
-    disagree = float(temp[4])
-    result += str(choice(agree, disagree))
-f.close()
+    fdir = generate_model_scores.get_save_dir(
+        model=args.model,
+        prompt_type=args.prompt_type,
+        country=args.country,
+        person=args.person,
+        year=args.year,
+        party=args.party
+    )
+    f = open(f"{fdir}{'reverse_' if args.reverse else ''}scores.txt", "r")
+    for line in f:
+        temp = line.strip().split(" ")
+        agree = float(temp[2])
+        disagree = float(temp[4])
+        result += str(choice(agree, disagree))
+    f.close()
 
-which = 0
+    which = 0
 
-# CHANGE the path to your Chrome executable
-driver = webdriver.Chrome()
+    # CHANGE the path to your Chrome executable
+    driver = webdriver.Chrome()
 
-# CHANGE the path to your Chrome adblocker
-chop = webdriver.ChromeOptions()
-chop.add_extension("/Users/adelaidechambers/Downloads/GIGHMMPIOBKLFEPJOCNAMGKKBIGLIDOM_5_17_1_0.crx")
-driver = webdriver.Chrome(options=chop)
-time.sleep(5)
+    # CHANGE the path to your Chrome adblocker
+    chop = webdriver.ChromeOptions()
+    chop.add_extension("/Users/adelaidechambers/Downloads/GIGHMMPIOBKLFEPJOCNAMGKKBIGLIDOM_5_17_1_0.crx")
+    driver = webdriver.Chrome(options=chop)
+    time.sleep(5)
 
-driver.get("https://www.politicalcompass.org/test")
+    driver.get("https://www.politicalcompass.org/test")
 
-for set in range(6):
-    time.sleep(2)
-    for q in question_xpath[set]:
-        driver.find_element("xpath",
-            "//*[@id='" + q + "_" + result[which] + "']"
-        ).click()
-        time.sleep(1)
-        which += 1
-    driver.find_element("xpath", next_xpath[set]).click()
+    for set in range(6):
+        time.sleep(2)
+        for q in question_xpath[set]:
+            driver.find_element("xpath",
+                "//*[@id='" + q + "_" + result[which] + "']"
+            ).click()
+            time.sleep(1)
+            which += 1
+        driver.find_element("xpath", next_xpath[set]).click()
 
-# Closing the browser after a bit
-time.sleep(20)
+    # Closing the browser after a bit
+    time.sleep(20)
