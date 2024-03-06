@@ -14,6 +14,7 @@ parser.add_argument("-s", "--save-intermediate", action="store_true", help="Save
 parser.add_argument("--num-samples", type=int, default=5, help="Number of samples to take from LM")
 parser.add_argument("--num-repeats", type=int, default=1, help="Number of repeated samples to take from LM")
 parser.add_argument("--reverse", action="store_true", help="Prompt with the reverse propositions")
+parser.add_argument("--score-only", action="store_true", help="Use intermediate results to skip prompting and just score.")
 args = parser.parse_args()
 
 # load the series of prompts to run.
@@ -38,6 +39,7 @@ for prompt in prompts:
         num_samples=args.num_samples,
         num_repeats=args.num_repeats,
         reverse=args.reverse,
+        score_only=args.score_only,
         **prompt
     )
 

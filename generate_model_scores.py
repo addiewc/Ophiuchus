@@ -27,6 +27,7 @@ def get_args():
     parser.add_argument("--party", type=str, default=None, help="Political party to act as, if `prompt_type=setting`")
     parser.add_argument("--save-intermediate", action="store_true", help="Save the model responses as an intermediate step")
     parser.add_argument("--reverse", action="store_true", help="Consider the reverse proposition for all prompts.")
+    parser.add_argument("--score-only", action="store_true", help="Skip the prompting and only score the results")
     parser.add_argument("-v", "--verbose", action="store_true", help="Log more model outputs")
     
     args = parser.parse_args()
@@ -125,7 +126,8 @@ def generate_scores(
         num_repeats=1,
         verbose=False,
         save_intermediate=False,
-        reverse=False
+        reverse=False,
+        score_only=False,
 ):
     statements = get_statements(reverse)
     prompt = get_prompt(prompt_type, person, party, country, year)
@@ -133,15 +135,22 @@ def generate_scores(
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
 
-    generator = pipeline(
-        "text-generation",
-        model=model,
-        device=device if not multi_gpu else None,
-        max_new_tokens=100,
-        num_return_sequences=num_samples,
-        token=HUGGINGFACE_ACCESS_TOKEN,
-        device_map="auto" if multi_gpu else None,
-    )
+    if not score_only:
+        generator = pipeline(
+            "text-generation",
+            model=model,
+            device=device if not multi_gpu else None,
+            max_new_tokens=100,
+            num_return_sequences=num_samples,
+            token=HUGGINGFACE_ACCESS_TOKEN,
+            device_map="auto" if multi_gpu else None,
+        )
+    else:
+        with open(f"{save_dir}{'reverse_' if reverse else ''}responses.jsonl", "r") as f:
+            model_responses = json.load(f)
+        assert len(model_responses) == len(statements) * num_samples, \
+            f"Expected {num_samples} responses for {len(statements)} statements ({len(statements) * num_samples} total) but got {len(model_responses)}."
+
     classifier = pipeline(
         "zero-shot-classification",
         model="facebook/bart-large-mnli",
@@ -157,26 +166,31 @@ def generate_scores(
         if verbose:
             print(f"Input: {input}")
 
-        # first, let's see how the model answers
-        responses = []
-        for it in range(num_repeats):
-            responses.extend([r for r in get_model_responses(generator, input, verbose=verbose)])
-        if save_intermediate:
-            new_responses.extend([
-                {
-                    "statement": statement,
-                    "response": r,
-                    "id": len(new_responses) + r_idx
-                } for r_idx, r in enumerate(responses)
-            ])
+        if not score_only:
+            # first, let's see how the model answers
+            responses = []
+            for it in range(num_repeats):
+                responses.extend([r for r in get_model_responses(generator, input, verbose=verbose)])
+            if save_intermediate:
+                new_responses.extend([
+                    {
+                        "statement": statement,
+                        "response": r,
+                        "id": len(new_responses) + r_idx
+                    } for r_idx, r in enumerate(responses)
+                ])
+        if score_only:
+            # load the response from the save file
+            start_idx = i * num_samples
+            responses = [r["response"] for r in model_responses[start_idx: start_idx + num_samples]]
 
         # now, let's test the sentiment
-        avg_scores, ind = classify_model_responses(classifier, prompt, responses, verbose=verbose, reverse=reverse)
+        avg_scores, ind = classify_model_responses(classifier, input, responses, verbose=verbose, reverse=reverse)
         pos, neg = avg_scores
         new_scores.append(f"{i} agree: {pos} disagree {neg}\n")
         individual_scores.append({"id": i, "agree": ind[0], "disagree": ind[1]})
 
-    if save_intermediate:
+    if save_intermediate and not score_only:
         with open(f"{save_dir}{'reverse_' if reverse else ''}responses.jsonl", "w") as f:
             json.dump(new_responses, f, indent=4)
 
