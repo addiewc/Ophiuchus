@@ -96,7 +96,9 @@ def classify_model_responses(classifier, prompt, responses, verbose=False, rever
     pos_scores = []
     neg_scores = []
     for r_idx, response in enumerate(responses):
-        result = classifier(f"{prompt}\n{response}", candidate_labels=["agree", "disagree"])
+        result = classifier(f"{prompt} {response}", candidate_labels=["agree", "disagree"])
+        #print(f"{prompt} {response}")
+        #print(f"\t{result}")
         if not reverse:
             pos_scores.append(result["scores"][result["labels"].index("agree")])
             neg_scores.append(result["scores"][result["labels"].index("disagree")])
@@ -185,7 +187,7 @@ def generate_scores(
             responses = [r["response"] for r in model_responses[start_idx: start_idx + num_samples]]
 
         # now, let's test the sentiment
-        avg_scores, ind = classify_model_responses(classifier, input, responses, verbose=verbose, reverse=reverse)
+        avg_scores, ind = classify_model_responses(classifier, statement, responses, verbose=verbose, reverse=reverse)
         pos, neg = avg_scores
         new_scores.append(f"{i} agree: {pos} disagree {neg}\n")
         individual_scores.append({"id": i, "agree": ind[0], "disagree": ind[1]})
