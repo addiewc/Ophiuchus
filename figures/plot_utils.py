@@ -31,7 +31,7 @@ def put_legend_outside_plot(ax, anchorage=(1.1, 1.05)):
     ax.legend(bbox_to_anchor=anchorage)
 
 
-def make_conventional_plot(model_scores: Dict[str, Tuple[float, float]], restrict_to_models = None, max_range = 10):
+def make_conventional_plot(model_scores: Dict[str, Tuple[float, float]], restrict_to_models = None, max_range = 10, alpha=1):
     model_ordering = plot_settings.get_model_ordering(restrict_to_models if restrict_to_models is not None else list(model_scores.keys()))
     colors = [plot_settings.get_model_colors(m) for m in model_ordering]
     markers = [plot_settings.get_model_marker(m) for m in model_ordering]
@@ -59,22 +59,121 @@ def make_conventional_plot(model_scores: Dict[str, Tuple[float, float]], restric
             edgecolor=[edge_colors[i] for i in range(len(model_ordering)) if markers[i] == marker],
             s=50,
             zorder=100,
-            alpha=0.7
+            alpha=alpha
         )
 
     return ax
 
 
+def make_alternating_horizontal_barplot(
+    model_scores: Dict[str, List[float]], textures: List[str], metric: str, restrict_to_models=None, double=False
+):
+    model_ordering = plot_settings.get_model_ordering(restrict_to_models if restrict_to_models is not None else list(model_scores.keys()))
+    model_ordering.reverse()
+    colors = [plot_settings.get_model_colors(m) for m in model_ordering]
+
+    ax = plot_settings.get_taller_axis(double=double)
+    ax.set_xlabel(plot_settings.get_metric_name(metric), fontsize=12)
+    format_ax(ax)
+
+    for tidx, texture in enumerate(textures):
+        print(texture, tidx)
+        ax.barh(
+            np.arange(tidx, len(model_ordering) * len(textures), len(textures)),
+            [model_scores[m][tidx] for m in model_ordering],
+            color=colors,
+            hatch=texture,
+            edgecolor="black",
+        )
+    
+    ax.set_yticks(
+        np.arange(len(textures)//2, len(model_ordering) * len(textures), len(textures)),
+        [plot_settings.get_model_name_conventions(m) for m in model_ordering], 
+        fontsize=10
+    )
+    ax.yaxis.tick_right()
+
+    ax.axvline(x = 0.0, ymin=0, ymax=len(model_ordering), color="black")
+    ax.spines["left"].set_visible(False)
+    return ax
+
+
+def make_alternating_horizontal_barplot_by_candidate(
+    model_scores: Dict[str, List[float]], textures: List[str], metric: str, double=False
+):
+    candidate_ordering = plot_settings.get_candidate_ordering(list(model_scores.keys()))
+    candidate_ordering.reverse()
+    colors = [plot_settings.get_finetuning_colors(m) for m in model_ordering]
+
+    ax = plot_settings.get_taller_axis(double=double)
+    ax.set_xlabel(plot_settings.get_metric_name(metric), fontsize=12)
+    format_ax(ax)
+
+    for tidx, texture in enumerate(textures):
+        print(texture, tidx)
+        ax.barh(
+            np.arange(tidx, len(model_ordering) * len(textures), len(textures)),
+            [model_scores[m][tidx] for m in model_ordering],
+            color=colors,
+            hatch=texture,
+            edgecolor="black",
+        )
+    
+    ax.set_yticks(
+        np.arange(len(textures)//2, len(model_ordering) * len(textures), len(textures)),
+        [plot_settings.get_model_name_conventions(m) for m in model_ordering], 
+        fontsize=10
+    )
+    ax.yaxis.tick_right()
+
+    ax.axvline(x = 0.0, ymin=0, ymax=len(model_ordering), color="black")
+    ax.spines["left"].set_visible(False)
+    return ax
+
+
+def make_alternating_vertical_barplot(
+    model_scores: Dict[str, List[float]], textures: List[str], metric: str, restrict_to_models=None, double=False
+):
+    model_ordering = plot_settings.get_model_ordering(restrict_to_models if restrict_to_models is not None else list(model_scores.keys()))
+    colors = [plot_settings.get_model_colors(m) for m in model_ordering]
+
+    ax = plot_settings.get_wider_axis(double=double)
+    ax.set_ylabel(plot_settings.get_metric_name(metric), fontsize=12)
+    format_ax(ax)
+
+    for tidx, texture in enumerate(textures):
+        print(texture, tidx)
+        ax.bar(
+            x=np.arange(tidx, len(model_ordering) * len(textures), len(textures)),
+            height=[model_scores[m][tidx] for m in model_ordering],
+            color=colors,
+            hatch=texture,
+            edgecolor="black",
+        )
+    
+    ax.set_xticks(
+        np.arange(len(textures)//2, len(model_ordering) * len(textures), len(textures)),
+        [plot_settings.get_model_name_conventions(m) for m in model_ordering], 
+        fontsize=10, rotation=45, ha="center"
+    )
+    ax.xaxis.tick_bottom()
+
+    ax.axhline(y = 0.0, xmin=0, xmax=len(model_ordering), color="black")
+    ax.spines["bottom"].set_visible(False)
+    return ax
+
+
 def make_horizontal_barplot(model_scores: Dict[str, float], metric: str, restrict_to_models=None):    
     model_ordering = plot_settings.get_model_ordering(restrict_to_models if restrict_to_models is not None else list(model_scores.keys()))
+    model_ordering.reverse()
     colors = [plot_settings.get_model_colors(m) for m in model_ordering]
 
     ax = plot_settings.get_square_axis()
     ax.set_xlabel(plot_settings.get_metric_name(metric), fontsize=12)
     format_ax(ax)
 
-    ax.barh(np.arange(len(model_ordering))[::-1], [model_scores[m] for m in model_ordering], color=colors)
-    ax.set_yticks(np.arange(len(model_ordering))[::-1], [plot_settings.get_model_name_conventions(m) for m in model_ordering], fontsize=10)
+    ax.barh(np.arange(len(model_ordering)), [model_scores[m] for m in model_ordering], color=colors, edgecolor="black")
+    ax.set_yticks(np.arange(len(model_ordering)), [plot_settings.get_model_name_conventions(m) for m in model_ordering], fontsize=10)
     ax.yaxis.tick_right()
 
     ax.axvline(x = 0.0, ymin=0, ymax=len(model_ordering), color="black")

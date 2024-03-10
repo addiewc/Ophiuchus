@@ -20,7 +20,7 @@ FIG_WIDTH = 4
 
 
 MODELS = [
-    "gpt2", "bert-base-uncased", "bert-large-uncased", "facebook/bart-base", "facebook/bart-large",
+    "gold_standard", "gpt2", "bert-base-uncased", "bert-large-uncased", "facebook/bart-base", "facebook/bart-large",
     "roberta-base", "roberta-large", "microsoft/phi-2", "google/gemma-2b", "google/gemma-7b",
     "meta-llama/Llama-2-7b-hf", "meta-llama/Llama-2-7b-chat-hf"
 ]
@@ -33,7 +33,13 @@ def get_square_axis():
 
 
 def get_wider_axis(double=False):
-    plt.figure(figsize=(int(FIG_WIDTH * (3/2 if not double else 5/2)), FIG_HEIGHT))
+    plt.figure(figsize=(int(FIG_WIDTH * (3/2 if not double else 3)), FIG_HEIGHT))
+    ax = plt.subplot(1, 1, 1)
+    return ax
+
+
+def get_taller_axis(double=False):
+    plt.figure(figsize=(FIG_WIDTH, int(FIG_HEIGHT * (3/2 if not double else 5/2))))
     ax = plt.subplot(1, 1, 1)
     return ax
 
@@ -46,6 +52,12 @@ def get_double_square_axis():
 
 def get_model_ordering(actual_models):
     return sorted(actual_models, key=lambda m: MODELS.index(m))
+
+
+def get_candidate_ordering(actual_candidates):
+    sorted_candidates = ["Donald Trump", "Hillary Clinton", "Gary Johnson", "Jill Stein",
+                         "Green Party", "Labour Party", "National Party", "New Zealand First Party", "Opportunities Party"]
+    return sorted(actual_candidates, key=lambda c: sorted_candidates.index(c))
 
 
 def get_metric_name(name):
@@ -90,8 +102,20 @@ def get_model_colors(mod):
         'roberta': '#66a61e',
         'phi': '#e6ab02',
         'gemma': '#a6761d',
-        'llama': '#e7298a'
+        'llama': '#e7298a',
+        'gold_standard': "#ffffff",
     }[get_model_family(mod).lower()]
+
+
+def get_finetuning_colors(party):
+    return {
+        "Hillary Clinton": "#7570b3",
+        "Donald Trump": "#d95f02",
+        "Green Party": "#1b9e77",
+        "Labour Party": "#7570b3",
+        "National Party": "#d95f02",
+        "New Zealand First Party": "#e7298a"
+    }[party]
 
 
 def get_model_marker(mod):
@@ -119,49 +143,19 @@ def get_sag_vs_baseline_colors(mod):
 def get_model_name_conventions(mname):
     return {
         "gpt2": "GPT2",
-        "bert-base-uncased": "BERT (base)",
-        "bert-large-uncased": "BERT (large)",
-        "facebook/bart-base": "BART (base)",
-        "facebook/bart-large": "BART (large)",
-        "roberta-base": "RoBERTa (base)",
-        "roberta-large": "RoBERTa (large)",
+        "bert-base-uncased": "BERT-base",
+        "bert-large-uncased": "BERT-large",
+        "facebook/bart-base": "BART-base",
+        "facebook/bart-large": "BART-large",
+        "roberta-base": "RoBERTa-base",
+        "roberta-large": "RoBERTa-large",
         "microsoft/phi-2": "Phi-2",
-        "google/gemma-2b": "Gemma (2b)",
-        "google/gemma-7b": "Gemma (7b)",
-        "meta-llama/Llama-2-7b-hf": "Llama (7b)",
-        "meta-llama/Llama-2-7b-chat-hf": "Llama chat (7b)"
+        "google/gemma-2b": "Gemma-2b",
+        "google/gemma-7b": "Gemma-7b",
+        "meta-llama/Llama-2-7b-hf": "Llama-2-7b",
+        "meta-llama/Llama-2-7b-chat-hf": "Llama-2-7b (chat)",
+        "gold_standard": "Political Compass",
     }[mname]
-    
-    
-def get_LINCS_task_names(task, add_return=True):
-    if task == 'continuousCombinatorialGeneration':
-        return 'Complete{}Generation'.format('\n' if add_return else ' ')
-    elif task == 'comboAndDosage':
-        return 'Combination{}& Dosage'.format('\n' if add_return else ' ')
-    elif task == 'comboAndTime':
-        return 'Combination{}& Treatment Time'.format('\n' if add_return else ' ')
-    print('Unrecognized', task)
-    assert False
-    
-    
-def get_species_axis_tick(species):
-    if species == 'RhesusMacaque':
-        return 'Rhesus\nMacaque'  # make this two lines
-    return species
-
-
-def get_organ_color_palette():
-    return ['#01665e', '#5ab4ac', '#c7eae5', '#f6e8c3', '#dfc27d', '#bf812d', '#8c510a']
-
-
-def get_TM_color_palette():
-    return {
-        'Sagittarius': '#80cdc1',
-        'edge': '#003c30',
-        'baseline': '#018571',
-        'Heart': '#f5f5f5',
-        'Kidney': '#dfc27d',
-        'Liver': '#a6611a' }
 
 
 def get_base_color():
