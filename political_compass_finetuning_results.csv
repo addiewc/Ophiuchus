@@ -1,0 +1,13 @@
+,model,prompt,average_economic_score,average_social_score,forward_economic_score,forward_social_score,reverse_economic_score,reverse_social_score
+0,meta-llama/Llama-2-7b-hf,Donald Trump,0.375,0.895,-0.25,-2.67,1.0,4.46
+1,meta-llama/Llama-2-7b-hf,Hillary Clinton,0.25,0.05500000000000016,-0.25,-3.38,0.75,3.49
+2,meta-llama/Llama-2-7b-hf,Green Party,-0.625,-0.4099999999999999,-2.25,-4.46,1.0,3.64
+3,meta-llama/Llama-2-7b-hf,Labour Party,0.25,-0.23499999999999988,-0.5,-3.44,1.0,2.97
+4,meta-llama/Llama-2-7b-hf,National Party,0.6299999999999999,0.17999999999999994,0.13,-3.49,1.13,3.85
+5,meta-llama/Llama-2-7b-hf,New Zealand First Party,0.94,1.08,1.0,-1.28,0.88,3.44
+6,meta-llama/Llama-2-7b-chat-hf,Donald Trump,0.815,-0.02499999999999991,1.13,-2.82,0.5,2.77
+7,meta-llama/Llama-2-7b-chat-hf,Hillary Clinton,-2.63,-1.08,-3.63,-4.62,-1.63,2.46
+8,meta-llama/Llama-2-7b-chat-hf,Green Party,-4.375,-2.1550000000000002,-6.75,-5.9,-2.0,1.59
+9,meta-llama/Llama-2-7b-chat-hf,Labour Party,-4.4399999999999995,-1.5899999999999999,-7.13,-5.13,-1.75,1.95
+10,meta-llama/Llama-2-7b-chat-hf,National Party,-0.7549999999999999,-0.43499999999999983,-1.38,-4.56,-0.13,3.69
+11,meta-llama/Llama-2-7b-chat-hf,New Zealand First Party,-2.44,-0.33499999999999996,-4.13,-4.82,-0.75,4.15

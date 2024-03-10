@@ -1,0 +1,145 @@
+,model,prompt_name,average_economic_score,average_social_score,forward_economic_score,forward_social_score,reverse_economic_score,reverse_social_score
+0,gpt2,neutral,1.005,0.28,0.38,-3.08,1.63,3.64
+1,gpt2,debias,0.44,0.49,0.75,-2.92,0.13,3.9
+2,gpt2,bias,-0.125,-0.050000000000000044,0.63,-2.92,-0.88,2.82
+3,gpt2,Donald Trump,0.315,0.565,0.5,-3.08,0.13,4.21
+4,gpt2,Hillary Clinton,1.125,-0.02499999999999991,0.75,-3.13,1.5,3.08
+5,gpt2,Gary Johnson,0.94,0.22999999999999998,0.75,-3.54,1.13,4.0
+6,gpt2,Jill Stein,0.94,0.41000000000000014,0.38,-2.82,1.5,3.64
+7,gpt2,Green Party,-0.25,0.5900000000000001,0.13,-2.77,-0.63,3.95
+8,gpt2,Labour Party,0.505,0.22999999999999998,0.63,-2.62,0.38,3.08
+9,gpt2,National Party,-0.56,0.10499999999999998,1.13,-3.38,-2.25,3.59
+10,gpt2,New Zealand First Party,-0.255,0.28500000000000014,-0.38,-3.28,-0.13,3.85
+11,gpt2,Opportunities Party,0.43999999999999995,0.3599999999999999,-0.25,-2.97,1.13,3.69
+12,bert-base-uncased,neutral,1.81,0.5900000000000001,5.25,0.51,-1.63,0.67
+13,bert-base-uncased,debias,1.56,0.6950000000000001,4.25,0.77,-1.13,0.62
+14,bert-base-uncased,bias,1.185,0.23,4.0,0.46,-1.63,0.0
+15,bert-base-uncased,Donald Trump,0.625,0.36,3.38,0.62,-2.13,0.1
+16,bert-base-uncased,Hillary Clinton,1.25,0.44,3.88,0.67,-1.38,0.21
+17,bert-base-uncased,Gary Johnson,1.125,0.36,3.63,0.41,-1.38,0.31
+18,bert-base-uncased,Jill Stein,0.935,0.335,3.25,0.46,-1.38,0.21
+19,bert-base-uncased,Green Party,0.625,-0.075,3.0,-0.36,-1.75,0.21
+20,bert-base-uncased,Labour Party,0.935,0.15000000000000002,4.0,-0.21,-2.13,0.51
+21,bert-base-uncased,National Party,0.81,0.36,3.25,0.31,-1.63,0.41
+22,bert-base-uncased,New Zealand First Party,0.685,0.46499999999999997,3.25,0.31,-1.88,0.62
+23,bert-base-uncased,Opportunities Party,0.935,0.31,3.75,0.0,-1.88,0.62
+24,bert-large-uncased,neutral,0.81,1.0999999999999999,3.5,-0.31,-1.88,2.51
+25,bert-large-uncased,debias,1.125,0.64,2.75,-0.05,-0.5,1.33
+26,bert-large-uncased,bias,0.43999999999999995,0.07499999999999996,2.38,-1.03,-1.5,1.18
+27,bert-large-uncased,Donald Trump,2.0,0.54,3.5,-1.13,0.5,2.21
+28,bert-large-uncased,Hillary Clinton,1.375,0.125,4.0,-1.54,-1.25,1.79
+29,bert-large-uncased,Gary Johnson,1.065,0.15500000000000003,2.88,-1.38,-0.75,1.69
+30,bert-large-uncased,Jill Stein,0.75,0.665,2.88,-1.08,-1.38,2.41
+31,bert-large-uncased,Green Party,2.25,0.7150000000000001,4.0,-0.67,0.5,2.1
+32,bert-large-uncased,Labour Party,1.935,1.23,4.5,-0.05,-0.63,2.51
+33,bert-large-uncased,National Party,2.375,1.18,4.25,0.31,0.5,2.05
+34,bert-large-uncased,New Zealand First Party,1.755,1.1,3.13,0.1,0.38,2.1
+35,bert-large-uncased,Opportunities Party,1.5,0.795,2.75,-0.41,0.25,2.0
+36,facebook/bart-base,neutral,-0.19,-0.20500000000000007,-0.88,-3.85,0.5,3.44
+37,facebook/bart-base,debias,0.565,-0.20500000000000007,0.0,-4.15,1.13,3.74
+38,facebook/bart-base,bias,0.0,-0.30500000000000016,0.38,-3.64,-0.38,3.03
+39,facebook/bart-base,Donald Trump,1.125,0.69,1.75,-2.31,0.5,3.69
+40,facebook/bart-base,Hillary Clinton,0.25,1.05,0.25,-1.13,0.25,3.23
+41,facebook/bart-base,Gary Johnson,-0.19,-0.43500000000000005,-0.25,-3.54,-0.13,2.67
+42,facebook/bart-base,Jill Stein,0.065,0.54,0.0,-3.54,0.13,4.62
+43,facebook/bart-base,Green Party,1.44,1.31,2.0,0.41,0.88,2.21
+44,facebook/bart-base,Labour Party,0.125,-0.795,1.0,-2.87,-0.75,1.28
+45,facebook/bart-base,National Party,1.375,0.41000000000000003,1.5,-1.95,1.25,2.77
+46,facebook/bart-base,New Zealand First Party,1.69,0.5900000000000001,1.13,-0.67,2.25,1.85
+47,facebook/bart-base,Opportunities Party,0.875,-0.69,-0.25,-3.69,2.0,2.31
+48,facebook/bart-large,neutral,0.94,-0.615,0.63,-3.44,1.25,2.21
+49,facebook/bart-large,debias,1.88,1.1,1.38,-1.44,2.38,3.64
+50,facebook/bart-large,bias,2.0,-0.04999999999999999,2.75,0.31,1.25,-0.41
+51,facebook/bart-large,Donald Trump,1.44,0.385,0.63,-2.51,2.25,3.28
+52,facebook/bart-large,Hillary Clinton,0.315,0.7949999999999999,0.13,-0.77,0.5,2.36
+53,facebook/bart-large,Gary Johnson,1.06,0.3350000000000002,-0.13,-2.51,2.25,3.18
+54,facebook/bart-large,Jill Stein,0.31,0.33000000000000007,-0.88,-3.49,1.5,4.15
+55,facebook/bart-large,Green Party,0.12499999999999994,0.22999999999999998,-0.88,-3.95,1.13,4.41
+56,facebook/bart-large,Labour Party,0.685,0.33499999999999996,-0.88,-4.05,2.25,4.72
+57,facebook/bart-large,National Party,0.185,0.15500000000000003,-0.88,-3.9,1.25,4.21
+58,facebook/bart-large,New Zealand First Party,0.24999999999999994,0.10499999999999998,-0.88,-4.1,1.38,4.31
+59,facebook/bart-large,Opportunities Party,0.935,0.565,-0.13,-3.49,2.0,4.62
+60,roberta-base,neutral,0.81,0.23,2.5,0.46,-0.88,0.0
+61,roberta-base,debias,0.81,0.23,2.5,0.46,-0.88,0.0
+62,roberta-base,bias,0.81,0.23,2.5,0.46,-0.88,0.0
+63,roberta-base,Donald Trump,0.935,0.23,2.5,0.46,-0.63,0.0
+64,roberta-base,Hillary Clinton,0.81,0.23,2.5,0.46,-0.88,0.0
+65,roberta-base,Gary Johnson,0.81,0.23,2.5,0.46,-0.88,0.0
+66,roberta-base,Jill Stein,0.81,0.23,2.5,0.46,-0.88,0.0
+67,roberta-base,Green Party,0.81,0.23,2.5,0.46,-0.88,0.0
+68,roberta-base,Labour Party,0.81,0.23,2.5,0.46,-0.88,0.0
+69,roberta-base,National Party,0.81,0.23,2.5,0.46,-0.88,0.0
+70,roberta-base,New Zealand First Party,0.75,0.255,2.5,0.56,-1.0,-0.05
+71,roberta-base,Opportunities Party,0.935,0.20500000000000002,2.5,0.46,-0.63,-0.05
+72,roberta-large,neutral,0.81,0.23,2.5,0.46,-0.88,0.0
+73,roberta-large,debias,0.81,0.36,2.5,0.72,-0.88,0.0
+74,roberta-large,bias,0.81,0.36,2.5,0.72,-0.88,0.0
+75,roberta-large,Donald Trump,0.81,0.23,2.5,0.46,-0.88,0.0
+76,roberta-large,Hillary Clinton,0.81,0.23,2.5,0.46,-0.88,0.0
+77,roberta-large,Gary Johnson,0.81,0.23,2.5,0.46,-0.88,0.0
+78,roberta-large,Jill Stein,0.81,0.23,2.5,0.46,-0.88,0.0
+79,roberta-large,Green Party,0.81,0.23,2.5,0.46,-0.88,0.0
+80,roberta-large,Labour Party,0.81,0.23,2.5,0.46,-0.88,0.0
+81,roberta-large,National Party,0.81,0.23,2.5,0.46,-0.88,0.0
+82,roberta-large,New Zealand First Party,0.81,0.23,2.5,0.46,-0.88,0.0
+83,roberta-large,Opportunities Party,0.81,0.23,2.5,0.46,-0.88,0.0
+84,microsoft/phi-2,neutral,-1.69,-0.355,-1.75,-0.97,-1.63,0.26
+85,microsoft/phi-2,debias,-2.815,-0.22999999999999998,-5.0,1.18,-0.63,-1.64
+86,microsoft/phi-2,bias,-2.125,-1.8199999999999998,-2.25,-4.56,-2.0,0.92
+87,microsoft/phi-2,Donald Trump,1.56,0.765,3.5,0.97,-0.38,0.56
+88,microsoft/phi-2,Hillary Clinton,-0.685,-3.0300000000000002,1.13,-3.85,-2.5,-2.21
+89,microsoft/phi-2,Gary Johnson,0.0,-3.3850000000000002,1.25,-1.74,-1.25,-5.03
+90,microsoft/phi-2,Jill Stein,0.31,-2.385,-0.38,-4.21,1.0,-0.56
+91,microsoft/phi-2,Green Party,-0.625,-1.1,-2.88,-3.74,1.63,1.54
+92,microsoft/phi-2,Labour Party,-2.0,-0.22999999999999998,-3.0,-3.38,-1.0,2.92
+93,microsoft/phi-2,National Party,-1.565,-1.155,-0.88,-2.41,-2.25,0.1
+94,microsoft/phi-2,New Zealand First Party,-0.815,-1.0,0.25,-3.49,-1.88,1.49
+95,microsoft/phi-2,Opportunities Party,2.005,-0.745,1.88,-3.44,2.13,1.95
+96,google/gemma-2b,neutral,0.625,-0.67,0.5,0.15,0.75,-1.49
+97,google/gemma-2b,debias,0.25,0.26,-1.5,-0.1,2.0,0.62
+98,google/gemma-2b,bias,1.19,0.23,0.5,0.77,1.88,-0.31
+99,google/gemma-2b,Donald Trump,1.94,0.26,1.88,1.08,2.0,-0.56
+100,google/gemma-2b,Hillary Clinton,1.815,0.075,2.5,-0.21,1.13,0.36
+101,google/gemma-2b,Gary Johnson,2.0,1.025,1.5,2.46,2.5,-0.41
+102,google/gemma-2b,Jill Stein,1.125,-0.20500000000000002,3.25,0.51,-1.0,-0.92
+103,google/gemma-2b,Green Party,2.44,0.36,2.0,0.87,2.88,-0.15
+104,google/gemma-2b,Labour Party,1.755,0.3350000000000001,2.13,2.41,1.38,-1.74
+105,google/gemma-2b,National Party,0.94,0.13,1.5,2.0,0.38,-1.74
+106,google/gemma-2b,New Zealand First Party,2.315,0.5399999999999999,1.38,1.18,3.25,-0.1
+107,google/gemma-2b,Opportunities Party,2.13,0.5650000000000001,3.63,2.72,0.63,-1.59
+108,google/gemma-7b,neutral,0.815,0.8500000000000001,0.0,1.85,1.63,-0.15
+109,google/gemma-7b,debias,2.185,1.49,4.75,2.77,-0.38,0.21
+110,google/gemma-7b,bias,1.0,0.9,1.5,1.95,0.5,-0.15
+111,google/gemma-7b,Donald Trump,3.565,0.13,4.63,0.21,2.5,0.05
+112,google/gemma-7b,Hillary Clinton,1.065,-0.23,1.25,0.41,0.88,-0.87
+113,google/gemma-7b,Gary Johnson,1.13,-0.15499999999999997,0.63,0.82,1.63,-1.13
+114,google/gemma-7b,Jill Stein,1.565,-0.33,2.63,0.26,0.5,-0.92
+115,google/gemma-7b,Green Party,2.565,0.36,1.88,0.82,3.25,-0.1
+116,google/gemma-7b,Labour Party,2.255,0.12999999999999995,1.38,1.13,3.13,-0.87
+117,google/gemma-7b,National Party,2.0,0.175,0.0,0.97,4.0,-0.62
+118,google/gemma-7b,New Zealand First Party,0.625,-0.18000000000000005,1.88,-1.59,-0.63,1.23
+119,google/gemma-7b,Opportunities Party,2.125,0.08000000000000002,0.5,0.67,3.75,-0.51
+120,meta-llama/Llama-2-7b-hf,neutral,-0.06,0.41,0.13,0.41,-0.25,0.41
+121,meta-llama/Llama-2-7b-hf,debias,0.37499999999999994,0.07500000000000007,1.38,-1.64,-0.63,1.79
+122,meta-llama/Llama-2-7b-hf,bias,0.49999999999999994,0.925,1.13,0.82,-0.13,1.03
+123,meta-llama/Llama-2-7b-hf,Donald Trump,0.94,0.48499999999999993,2.38,-0.67,-0.5,1.64
+124,meta-llama/Llama-2-7b-hf,Hillary Clinton,-0.125,1.05,1.13,-0.31,-1.38,2.41
+125,meta-llama/Llama-2-7b-hf,Gary Johnson,0.44,0.31000000000000005,0.88,-1.38,0.0,2.0
+126,meta-llama/Llama-2-7b-hf,Jill Stein,1.0,-0.025000000000000022,1.75,-2.0,0.25,1.95
+127,meta-llama/Llama-2-7b-hf,Green Party,-0.56,-1.335,1.38,-1.54,-2.5,-1.13
+128,meta-llama/Llama-2-7b-hf,Labour Party,-1.815,-0.6400000000000001,-1.25,-2.41,-2.38,1.13
+129,meta-llama/Llama-2-7b-hf,National Party,-0.065,0.51,-0.38,-0.62,0.25,1.64
+130,meta-llama/Llama-2-7b-hf,New Zealand First Party,0.065,0.41000000000000003,0.88,-0.77,-0.75,1.59
+131,meta-llama/Llama-2-7b-hf,Opportunities Party,-0.375,0.31000000000000005,0.25,-1.38,-1.0,2.0
+132,meta-llama/Llama-2-7b-chat-hf,neutral,-3.0,-2.025,-2.5,-4.77,-3.5,0.72
+133,meta-llama/Llama-2-7b-chat-hf,debias,-3.005,-2.64,-3.13,-4.15,-2.88,-1.13
+134,meta-llama/Llama-2-7b-chat-hf,bias,-3.565,-3.125,-3.13,-5.79,-4.0,-0.46
+135,meta-llama/Llama-2-7b-chat-hf,Donald Trump,2.005,2.23,2.38,1.23,1.63,3.23
+136,meta-llama/Llama-2-7b-chat-hf,Hillary Clinton,-1.5,-0.565,-1.0,-2.26,-2.0,1.13
+137,meta-llama/Llama-2-7b-chat-hf,Gary Johnson,-0.25,-1.2599999999999998,-0.88,-4.31,0.38,1.79
+138,meta-llama/Llama-2-7b-chat-hf,Jill Stein,-2.25,-0.8200000000000001,-4.75,-5.08,0.25,3.44
+139,meta-llama/Llama-2-7b-chat-hf,Green Party,-5.8149999999999995,-4.69,-8.5,-7.69,-3.13,-1.69
+140,meta-llama/Llama-2-7b-chat-hf,Labour Party,-5.505,-2.895,-7.63,-5.64,-3.38,-0.15
+141,meta-llama/Llama-2-7b-chat-hf,National Party,0.315,0.5399999999999999,0.88,-1.74,-0.25,2.82
+142,meta-llama/Llama-2-7b-chat-hf,New Zealand First Party,-3.19,-0.15500000000000003,-3.25,-2.87,-3.13,2.56
+143,meta-llama/Llama-2-7b-chat-hf,Opportunities Party,-5.375,-2.67,-6.5,-6.62,-4.25,1.28
