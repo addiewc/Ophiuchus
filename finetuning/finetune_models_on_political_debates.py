@@ -67,7 +67,9 @@ model.config.pretraining_tp = 1
 tokenizer = AutoTokenizer.from_pretrained(
     base_model, trust_remote_code=True, token=HUGGINGFACE_ACCESS_TOKEN)
 special_tokens = []
-for speaker in ["Q", "CLINTON", "TRUMP", "KAINE", "PENCE", "HOST"]:
+speakers = ["Q", "CLINTON", "TRUMP", "KAINE", "PENCE", "HOST"] if "usa" in args.name else \
+    ["HOST", "GREEN", "LABOUR", "NATIONAL", "NZ_FIRST"]
+for speaker in speakers:
     special_tokens.append(f"[START_{speaker}]")
     special_tokens.append(f"[END_{speaker}]")
 tokenizer.add_tokens(special_tokens, special_tokens=True)
@@ -85,10 +87,10 @@ peft_params = LoraConfig(
 
 # Set up training
 training_params = TrainingArguments(
-    output_dir=f"finetuned_{base_model}/on_clinton/test/",
+    output_dir=f"finetuned_{args.name}_{base_model}/",
     num_train_epochs=args.num_epochs,
     per_device_train_batch_size=args.batch_size,
-    gradient_accumulation_steps=1,
+    gradient_accumulation_steps=args.accumulation_steps,
     optim="paged_adamw_32bit",
     save_steps=25,
     logging_steps=25,
