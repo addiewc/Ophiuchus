@@ -68,7 +68,7 @@ def get_prompt(prompt_type, person, party, country, year):
         raise ValueError(f"Unexpected prompt type {prompt_type}.")
 
 
-def get_save_dir(model, prompt_type, person, party, country, year):
+def get_save_dir(model, prompt_type, person=None, party=None, country=None, year=None):
     outdir = f"LM_results/{model}/{prompt_type}_prompt/"
     if prompt_type.lower() == "setting":
         if person is not None:
@@ -130,10 +130,11 @@ def generate_scores(
         save_intermediate=False,
         reverse=False,
         score_only=False,
+        additional_dir="",
 ):
     statements = get_statements(reverse)
     prompt = get_prompt(prompt_type, person, party, country, year)
-    save_dir = get_save_dir(model, prompt_type, person, party, country, year)
+    save_dir = f"{additional_dir}{get_save_dir(model, prompt_type, person, party, country, year)}"
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
 
